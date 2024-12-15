@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversion Progress</title>
+    <script>
+        function checkProgress() {
+            fetch('progress')
+                .then(response => response.text())
+                .then(status => {
+                    document.getElementById('progress').innerText = status;
+                    if (status !== 'Completed' && !status.startsWith('Error')) {
+                        setTimeout(checkProgress, 2000);
+                    } else if (status === 'Completed') {
+                        document.getElementById('link').innerHTML = '<a href="uploads/converted.docx">Download Result</a>';
+                    }
+                });
+        }
+
+        window.onload = checkProgress;
+    </script>
+</head>
+<body>
+    <h2>File Conversion Progress</h2>
+    <p id="progress">Starting...</p>
+    <div id="link"></div>
+</body>
+</html>
